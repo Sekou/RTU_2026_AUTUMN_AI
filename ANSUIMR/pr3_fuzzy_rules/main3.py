@@ -224,7 +224,7 @@ if __name__=="__main__":
             while True:
                 robot.x, robot.y = pa.get_random_point()
                 x=robot.x-pa.get_parking_point()[0]
-                if x>=THR_X: break
+                if abs(x)>=THR_X: break
 
             robot.alpha = lim_ang(np.random.random()*2*math.pi)
             d0=abs(x)

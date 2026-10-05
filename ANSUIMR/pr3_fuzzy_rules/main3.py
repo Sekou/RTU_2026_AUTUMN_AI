@@ -180,7 +180,7 @@ if __name__=="__main__":
                     with open("tables.txt", "w") as f:
                         f.write(str(tables))  # сохранение четких экспертных таблиц по эпизодам обучения робота показом
                 if ev.key==pygame.K_2: 
-                    with open("tables_final7.txt", "r") as f:
+                    with open("tables_final5.txt", "r") as f:
                         tables=eval(f.read())
                         table=list(itertools.chain(*tables))
                         fuz_table=[]

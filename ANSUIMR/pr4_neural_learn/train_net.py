@@ -15,24 +15,29 @@ def create_model(num_imputs, num_outputs):
 def train_net():
 
     with open("samples.txt", "r") as f:
-        arr=np.array(eval(f.read()))
-        num_imputs, num_outputs = len(arr[0][1]), len(arr[0][1])
+        arr=eval(f.read())
+        num_imputs, num_outputs = len(arr[0][1]), len(arr[0][0])
+        print(f"ni = {num_imputs}, no = {num_outputs}")
         N = len(arr)
-        X=arr[:, 1]
-        Y=arr[:, 0] #.reshape((N, num_outputs))
+        X=np.array([b for a,b in arr])
+        Y=np.array([a for a,b in arr]) #.reshape((N, num_outputs))
 
     model = create_model(num_imputs, num_outputs)
     model.summary()
     model.compile(optimizer='adam', loss='mae')
-
+    # model.compile(optimizer='adam', loss='cosine_similarity')
 
     n1=int(N*0.7)
 
     X_train=X[:n1]
+    print(X_train.shape)
     Y_train=Y[:n1]
+    print(Y_train.shape)
 
     X_val=X[n1:]
+    print(X_val.shape)
     Y_val=Y[n1:]
+    print(Y_val.shape)
 
     losses = model.fit(X_train, Y_train,
                        validation_data=(X_val, Y_val),

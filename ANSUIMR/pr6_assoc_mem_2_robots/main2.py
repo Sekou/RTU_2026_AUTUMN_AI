@@ -160,16 +160,6 @@ if __name__=="__main__":
                 # a1=lim_ang(math.atan2(*np.subtract(bar.get_pos(), robot.get_pos())[::-1])-robot.alpha)
                 # a2=lim_ang(math.atan2(*np.subtract(bar.get_pos(), robot2.get_pos())[::-1])-robot2.alpha)
                 
-                robot.highlighted=False
-                robot2.highlighted=False
-                if robot.vrot>0 and abs(a1)>0.2: 
-                    robot2.vlin=robot.vlin/10
-                    # robot2.vrot=robot.vrot/2
-                    robot.highlighted=True
-                if robot.vrot<0 and abs(a2)>0.2: 
-                    robot.vlin=robot2.vlin/10
-                    # robot.vrot=robot2.vrot/2
-                    robot2.highlighted=True
                 if ev.key == pygame.K_SPACE:
                     robot.highlighted=False
                     robot2.highlighted=False
@@ -178,6 +168,18 @@ if __name__=="__main__":
                     robot.vrot=robot2.vrot=0
                     robot.vlin=robot2.vlin=0
 
+        #выбор ведущих роботов
+        #робот должен (1) вращаться к центру балки (2) быть повернут в сторону центра балки
+        robot.highlighted=False
+        robot2.highlighted=False
+        if robot.vrot>0 and a1*robot.vrot>0 and abs(a1)>0.2: 
+            robot2.vlin=robot.vlin/10
+            # robot2.vrot=robot.vrot/2
+            robot.highlighted=True
+        if robot.vrot<0 and a2*robot.vrot>0 and abs(a2)>0.2: 
+            robot.vlin=robot2.vlin/10
+            # robot.vrot=robot2.vrot/2
+            robot2.highlighted=True
         sens_vec=[float(v) for v in robot.get_sensor_vec()]
 
         align_bar(robot, robot2)

@@ -69,7 +69,7 @@ def mutate(traj):
         i2_gene = np.random.randint(i1_gene, len(traj.pts) - edge)
         traj.pts[i1_gene], traj.pts[i2_gene]=traj.pts[i2_gene], traj.pts[i1_gene]
     else:
-        i_gene = np.random.randint(edge, len(traj.pts)-1 - edge)
+        i_gene = np.random.randint(edge, len(traj.pts) - edge) #NEW
         traj.pts[i_gene] = [traj.pts[i_gene][0] + rn(20), traj.pts[i_gene][1] + rn(20)]
 
 
@@ -91,7 +91,7 @@ def repopulate(trajs, objs, N, num_elite=3):
     new_trajs=trajs[:len(trajs)//2] #удаление старых траекторий
     while len(new_trajs)<N: #восполнение
         i1_creature = np.random.randint(num_elite)
-        i2_creature = np.random.randint(num_elite)#len(old_trajs)//2)
+        i2_creature = np.random.randint(len(old_trajs)//2) #NEW
         tr1, tr2=crossover(old_trajs[i1_creature], old_trajs[i2_creature], objs)
         new_trajs = (new_trajs+[tr1, tr2])[:N]
     return new_trajs
@@ -147,7 +147,7 @@ if __name__=="__main__":
             if ev.type == pygame.KEYDOWN:
                 if ev.key == pygame.K_r: print("Hi")                
 
-        for step in range(1):
+        for step in range(10): #NEW
             trajs=gen_alg_step(iter_ind, p_start, p_end, trajs, objs, N, 0.05)
 
         q_best, best_traj=trajs[0].q, trajs[0] 
